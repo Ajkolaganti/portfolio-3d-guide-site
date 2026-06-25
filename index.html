@@ -271,6 +271,15 @@
     letter-spacing: 0.08em;
     text-transform: uppercase;
   }
+  .prompt-block pre.tall {
+    max-height: 460px;
+  }
+  .prompt-note {
+    color: var(--text-dim);
+    font-size: 13px;
+    margin-top: 10px;
+    line-height: 1.7;
+  }
 
   /* ---------- RECAP PILLS ---------- */
   .recap-flow {
@@ -391,7 +400,7 @@
 
 <nav>
   <div class="nav-inner">
-    <div class="nav-brand">sidhiratech<span>/build-guide</span></div>
+    <div class="nav-brand">build-guide<span>/3d-portfolio</span></div>
     <a class="nav-cta" href="#share">share this guide</a>
   </div>
 </nav>
@@ -520,8 +529,8 @@ Photorealistic, ultra realistic, commercial photography, lifestyle portrait, por
       <div class="step-body">
         <h3>Get your building blocks ready</h3>
         <ul>
-          <li>The master prompt — describes all four 3D scenes, your job history, colors, fonts</li>
-          <li>The Scene 3 prompt — the floating skills graph, built separately</li>
+          <li>The master prompt — describes all four 3D scenes, your job history, colors, fonts (full prompt below in <strong>Part Three</strong>)</li>
+          <li>The Scene 3 prompt — the floating skills graph, built separately (also in Part Three)</li>
           <li>The hero video from Part One</li>
         </ul>
       </div>
@@ -611,17 +620,202 @@ Photorealistic, ultra realistic, commercial photography, lifestyle portrait, por
     </div>
   </section>
 
+  <!-- PART 3 -->
+  <section id="prompts">
+    <div class="section-label">
+      <div class="num">03</div>
+      <div class="title">Part Three — The Actual Prompts</div>
+    </div>
+    <div class="section-headline">Copy these straight into Claude Code.</div>
+    <div class="section-deck">These are the exact prompts referenced in Part Two. The first builds the whole site. The second builds Scene 3 — the floating skills graph — as its own focused piece right after.</div>
+
+    <div class="step">
+      <div class="step-marker">A</div>
+      <div class="step-body">
+        <h3>The master build prompt</h3>
+        <p>Paste this whole thing into Claude Code as your first message in a fresh project folder. It covers the tech stack, all four 3D scenes, your real job history, and the visual direction.</p>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-block-label">Master Prompt — Full Site Build</span>
+            <button class="prompt-copy-btn" data-copy-target="master-prompt">copy</button>
+          </div>
+          <pre class="tall" id="master-prompt">Use the ui-ux-pro-max skill for this build. Apply it for the overall design system, layout decisions, spacing/typography scale, component composition, and visual polish across every section below — treat it as the governing design authority for this project.
+
+TECH STACK
+- Next.js 14+ (App Router) + TypeScript
+- React Three Fiber + drei for the 3D scene/canvas layer (Three.js)
+- Tailwind CSS for utility styling
+- Framer Motion for text/element reveal animation
+- GSAP + ScrollTrigger for scroll-driven 3D camera/scene transitions
+- shadcn/ui for base components (buttons, cards, badges)
+- Deploy target: Vercel
+
+DESIGN REFERENCES
+- 21st.dev hero patterns: staggered word-by-word headline reveal using Framer Motion, a mouse-follow radial glow effect behind hero content, an SVG/grid background with hover-responsive tiles for depth, and a trust-indicator stat strip under the CTA.
+- Peachweb.io 3D web patterns: scroll-triggered 3D scene transitions where camera position/rotation animates through chapters as the user scrolls, keyframe-based object animation tied to scroll percentage (not time), ambient floating particles reacting subtly to cursor movement, and clean chapter-to-chapter transitions rather than abrupt cuts.
+
+HERO SECTION (VIDEO-BASED)
+Use the hero video (developer at a dual-monitor desk, warm cinematic lighting, code/architecture diagrams on screen) as the background.
+- Full-bleed video background, object-fit cover, muted/autoplay/loop, with a subtle dark gradient overlay (bottom-heavy, ~40% opacity black-to-transparent) so text stays legible.
+- Layer a 3D canvas (React Three Fiber) on top of the video using a transparent-background Three.js scene — an animated "code constellation" (nodes/edges referencing API architecture) drifting in 3D space with slight parallax on mouse move.
+- Headline text overlay with a staggered word-by-word reveal animation:
+  - Eyebrow line: SENIOR SQL & API DEVELOPER
+  - Headline: Building enterprise systems that scale.
+  - Subtext: 7+ years across finance, telecom, and insurance — Java, Spring Boot, AWS, and API architecture for systems handling millions in loan servicing volume.
+- CTA buttons: "View Experience" (scrolls to timeline) and "Get in Touch".
+- Scroll-down indicator bottom-center.
+
+THE FOUR 3D SCENES (CONTINUOUS CAMERA PATH)
+Build one continuous 3D world that the camera flies through as the user scrolls, driven by GSAP ScrollTrigger, through four distinct scenes. These four scenes must feel like one continuous camera path through one connected 3D world, not four separate widgets dropped on a page — that continuity is the single biggest thing that makes a 3D portfolio feel premium instead of gimmicky.
+
+1) Hero — the code/node constellation described above, drifting over the full-bleed video background.
+
+2) Experience Timeline — a "Database Engine Room" scene. A rotating 3D server-rack / database cylinder motif: stacked translucent disks (representing tables/indexes) with thin glowing lines (queries) pulsing between them. As each timeline card scrolls into focus, a query-line animates from the rack toward that card and lights up, visually tying the 3D object to the role being read. Subtle ambient pulsing glow synced to scroll velocity. Keep the warm amber accent threading through, with cooler blue-white highlights on the data lines for contrast.
+
+3) Skills — an "API Constellation" scene. A 3D node graph where each skill category (Languages, Backend, Cloud/Infra, Database, Security, Frontend) is a glowing cluster of nodes in 3D space, connected by thin edges. The camera slowly orbits the whole graph. On hover/tap of a skill card in the UI, the matching 3D node pulses brighter and its connections highlight. This reuses the hero's node/edge visual language so the site feels cohesive.
+
+4) Contact/footer — a "Closing Orbit" scene. Slow down dramatically: a single soft-glowing orb (or an extruded 3D wordmark) gently rotating, with the same particle field from the hero now sparse and slow. This is deliberately the least busy scene on the site — the "exhale" moment signaling the end. CTA buttons sit in front of this scene with strong contrast so they don't compete with it.
+
+SITE STRUCTURE
+
+1. Hero (described above)
+
+2. About / Intro
+Short bio: Senior SQL/API Developer, M.S. Computer and Information Systems, based in Delray Beach FL. Core philosophy line: a systems-first engineer who treats SQL and API design as the backbone of reliable enterprise software, not an afterthought to the framework.
+
+3. Experience Timeline (Scene 2: Database Engine Room)
+Render as a vertical timeline where each role activates as it scrolls into view — cards appear to rotate/slide in from a z-axis offset rather than just fading. Order most recent first:
+
+Senior Java Developer — Lakeview Loan Servicing / Bayview Asset Management (Nov 2024 — Present)
+- Designed and developed secure Java-based microservices for a large-scale Defect Management System (DMS) supporting banking and loan servicing operations
+- Built RESTful APIs with Spring Boot and Hibernate/JPA for defect lifecycle management, document handling, and task orchestration
+- Implemented RBAC and group-driven authorization aligned with IAM best practices
+- Developed complex prioritization logic based on investor rules (Ginnie Mae, Fannie Mae, EBO/Repurchase), loan status, and delinquency metrics
+- Wrote optimized SQL Server queries and stored procedures for high-volume transactional workflows
+- Ensured secure data handling, audit trails, and workflow traceability for regulatory compliance
+- Stack: Java, Spring Boot, Hibernate/JPA, SQL Server, RBAC, IAM, REST APIs, Microservices
+
+Senior Full Stack / Java Engineer — Verizon (Apr 2021 — Sep 2024)
+- Developed and maintained Spring Boot microservices in AWS cloud environments for enterprise platforms
+- Built and consumed secure REST APIs focused on performance, scalability, and fault tolerance
+- SQL Server dynamic queries and multi-table join views powering telecom provisioning APIs
+- API request throttling and SQL connection pooling for high-concurrency endpoints
+- Containerized applications with Docker and deployed via Kubernetes
+- Led a Java 8 to 17 upgrade leveraging streams, lambdas, and modern language features
+- Stack: Java, Spring Boot, AWS, Docker, Kubernetes, REST APIs, SQL Server
+
+SQL & API Developer — Nationwide Insurance
+- Versioned RESTful API contracts using Swagger/OpenAPI for premium calculation endpoints
+- SQL Server stored procedures eliminating ad-hoc SQL, enforcing injection prevention, cutting query time 30%
+- Built backend services supporting insurance policy and premium workflows
+- Stack: Java, Spring Boot, SQL Server, REST APIs, Swagger/OpenAPI
+
+SQL & API Developer — Equifax
+- API request/response schema and SQL data contract design across SOAP/REST integrations
+- SQL Server index/execution plan optimization cutting query runtimes 40%+ on fraud detection datasets
+- SQL-driven ETL pipelines and API data exchange contracts for credit data integration
+- Optimized SQL lookups and caching for authentication workflows under SLA constraints
+- Stack: Java, .NET, SQL Server, SOAP/REST, ETL
+
+(Only these enterprise W-2 roles — no staffing placements, no personal/solo projects.)
+
+4. Skills / Stack Grid (Scene 3: API Constellation)
+3D card grid (tilt-on-hover) grouped by category:
+- Languages: Java 8/11/17, SQL (T-SQL), TypeScript
+- Backend: Spring Boot, Hibernate/JPA, Microservices, REST/SOAP APIs, Kafka
+- Cloud/Infra: AWS (EC2, S3, RDS, SQS), Docker, Kubernetes
+- Database: SQL Server, PostgreSQL, Oracle/MySQL, query optimization, stored procedures
+- Security: IAM, RBAC, OWASP, Fortify, Black Duck
+- Frontend: React, Next.js
+
+5. Education
+M.S. Computer and Information Systems
+
+6. Contact (Scene 4: Closing Orbit)
+- Email, LinkedIn, GitHub
+- Simple form or direct mailto CTA
+- Footer continues Scene 4's ambient glow/particles, slowed further
+
+VISUAL DIRECTION
+- Palette: warm cinematic dark base (near-black, around #0D0D0D) matching the hero video's warm amber lighting, with a single warm amber/orange accent (around #E8923C, picked from the video's lamp glow) for CTAs and highlights, plus cooler blue-white highlights for data/query lines in Scene 2.
+- Typography: a clean technical sans (Inter or Geist) for body text, with a slightly heavier display weight for headlines — mix bold/regular within headline lines for emphasis.
+- Motion: scroll position drives 3D camera/object state (GSAP ScrollTrigger + R3F), not just opacity fades. Hover states get subtle 3D tilt/depth, not flat color changes. Respect prefers-reduced-motion and fall back to simple fades for all four scenes.
+- Performance: lazy-load the 3D canvas, keep particle/geometry counts modest, keep the hero video compressed and under roughly 8MB, target a Lighthouse performance score of 85+.
+
+Deploy-ready for Vercel.</pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-marker">B</div>
+      <div class="step-body">
+        <h3>The Scene 3 prompt (skills graph)</h3>
+        <p>Once the main build is done, paste this in as a focused follow-up to build the floating skills graph specifically — the 3D scene that lights up nodes when you hover the matching skill card.</p>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-block-label">Scene 3 Prompt — API Constellation</span>
+            <button class="prompt-copy-btn" data-copy-target="scene3-prompt">copy</button>
+          </div>
+          <pre class="tall" id="scene3-prompt">Use the ui-ux-pro-max skill for this component.
+
+Build a React Three Fiber (drei) component called ApiConstellationScene for a Next.js 14 / TypeScript portfolio site. This is the 3D background scene for the Skills section of a developer portfolio.
+
+CONCEPT
+The tech stack rendered as a living constellation: each skill category is a glowing cluster of nodes in 3D space, connected to other nodes in its cluster by thin edges, with thin cross-cluster edges showing how categories relate (e.g. Backend to Database, Cloud/Infra to Backend). It should feel like a continuation of the hero section's "code constellation" — same visual language, more structured now that we're past the hero.
+
+DATA STRUCTURE
+Six clusters, positioned at different points in 3D space so the whole graph reads as one connected structure, not six separate blobs:
+- Languages: Java 8/11/17, SQL (T-SQL), TypeScript
+- Backend: Spring Boot, Hibernate/JPA, Microservices, REST/SOAP APIs, Kafka
+- Cloud/Infra: AWS (EC2, S3, RDS, SQS), Docker, Kubernetes
+- Database: SQL Server, PostgreSQL, Oracle/MySQL, Query Optimization, Stored Procedures
+- Security: IAM, RBAC, OWASP, Fortify, Black Duck
+- Frontend: React, Next.js
+
+Each skill is one node (a small glowing sphere or icosahedron). Each category is a cluster of its nodes positioned close together, with a slightly larger "anchor" node or label floating at the cluster's center.
+
+VISUAL SPEC
+- Background: transparent (this canvas sits behind/within the page, not as a full opaque background).
+- Nodes: small emissive spheres, warm amber as the base node color.
+- Edges: thin lines — within-cluster edges in dim amber, cross-cluster edges in a cooler blue-white so the "system-level" connections visually read as distinct from "same category" connections.
+- Idle motion: nodes drift very slightly — a subtle floating/breathing animation with a small sine-wave offset per node, low amplitude — never fully static, never distracting.
+- Camera: a slow continuous orbit around the whole graph, barely perceptible, just enough to give the scene life.
+- Lighting: minimal — mostly self-illuminated via emissive materials, plus one soft ambient light and one subtle point light near the camera for depth.
+
+INTERACTIVITY (the key feature)
+This scene must sync bidirectionally with the 2D skill cards rendered in the DOM:
+- On hover or tap of a skill card in the UI, the matching 3D node should scale up slightly (a spring animation, not an instant snap), increase emissive intensity noticeably, and brighten its connected edges within that cluster.
+- On hover/click of a category label in the UI, brighten the entire cluster (all nodes plus internal edges) at once.
+- Expose this through a simple prop/context API, e.g. &lt;ApiConstellationScene activeSkill={hoveredSkillId} activeCategory={hoveredCategoryId} /&gt;, so the parent page component can drive it from normal React state (onMouseEnter/onMouseLeave on the skill cards).
+
+SCROLL BEHAVIOR
+- This scene should fade/scale in as the Skills section enters the viewport.
+- If implementing a continuous camera flythrough across the whole site, this scene's camera position should be reachable by the same master scroll timeline that also drives the Database Engine Room and Closing Orbit scenes — but the component itself should still work standalone if mounted in isolation; don't hard-couple it to a single global timeline.
+
+PERFORMANCE & ACCESSIBILITY
+- Keep total node count reasonable — around 25 to 30 nodes across all clusters is plenty, don't over-decorate.
+- Lazy-load this canvas so it doesn't block initial page load.
+- Respect prefers-reduced-motion: disable camera auto-rotation and node idle-drift, keep nodes static but still interactive on hover.
+
+DELIVERABLE
+A single self-contained component file (e.g. components/scenes/ApiConstellationScene.tsx) plus a short usage example showing how the Skills section page component would pass activeSkill/activeCategory state into it based on which skill card is currently hovered.</pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- RECAP -->
   <section id="recap">
     <div class="section-label">
-      <div class="num">03</div>
+      <div class="num">04</div>
       <div class="title">Quick Recap</div>
     </div>
     <div class="section-headline">The whole thing, five steps.</div>
     <div class="recap-flow">
       <span class="pill">Generate hero video</span>
       <span class="arrow">→</span>
-      <span class="pill">Hand prompts to Claude Code</span>
+      <span class="pill">Copy prompts from Part Three</span>
       <span class="arrow">→</span>
       <span class="pill">Build site + Scene 3</span>
       <span class="arrow">→</span>
@@ -634,7 +828,7 @@ Photorealistic, ultra realistic, commercial photography, lifestyle portrait, por
   <!-- TROUBLESHOOTING -->
   <section id="troubleshoot">
     <div class="section-label">
-      <div class="num">04</div>
+      <div class="num">05</div>
       <div class="title">If Something Goes Wrong</div>
     </div>
     <div class="section-headline">Common hiccups, plain fixes.</div>
@@ -677,7 +871,7 @@ Photorealistic, ultra realistic, commercial photography, lifestyle portrait, por
 </section>
 
 <footer>
-  built by <a href="https://github.com/Ajkolaganti" target="_blank" rel="noopener">@Ajkolaganti</a> · sidhiratech
+  built by <a href="https://github.com/Ajkolaganti" target="_blank" rel="noopener">@Ajkolaganti</a>
 </footer>
 
 <script>
