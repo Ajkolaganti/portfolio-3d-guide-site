@@ -223,6 +223,55 @@
     border: 1px solid var(--border);
   }
 
+  .prompt-block {
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    background: var(--bg-raised);
+  }
+  .prompt-block-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .prompt-block-label {
+    font-size: 10.5px;
+    color: var(--lime-dim);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .prompt-copy-btn {
+    background: var(--lime-faint);
+    border: 1px solid var(--border);
+    color: var(--lime);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    padding: 4px 10px;
+    cursor: pointer;
+  }
+  .prompt-copy-btn:hover { background: var(--lime); color: var(--bg); }
+  .prompt-block pre {
+    margin: 0;
+    padding: 14px;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--text);
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 340px;
+    overflow-y: auto;
+  }
+  .prompt-block pre.negative { color: var(--text-dim); }
+  .prompt-block-sub {
+    padding: 10px 14px 0;
+    font-size: 10.5px;
+    color: var(--lime-dim);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   /* ---------- RECAP PILLS ---------- */
   .recap-flow {
     display: flex;
@@ -353,6 +402,7 @@
     <h1>Build a <span class="accent">3D portfolio site</span><br>with a video hero, step by step.</h1>
     <p class="hero-sub">A plain-language walkthrough for generating the hero video and building the full scroll-driven 3D website using Claude Code — no technical background required to follow along.</p>
     <div class="hero-tags">
+      <span class="tag">GOOGLE FLOW</span>
       <span class="tag">NEXT.JS 14</span>
       <span class="tag">REACT THREE FIBER</span>
       <span class="tag">GSAP SCROLLTRIGGER</span>
@@ -370,31 +420,68 @@
       <div class="title">Part One — The Hero Video</div>
     </div>
     <div class="section-headline">Generate the video that plays behind the headline.</div>
-    <div class="section-deck">This is the first thing visitors see — you at your desk, warm lighting, code on screen. Keep it short, it loops in the background.</div>
+    <div class="section-deck">This is the first thing visitors see — you at your desk, warm lighting, code on screen. Made in two passes with Google Flow: a still photo first, then animated into a short video.</div>
 
     <div class="step">
       <div class="step-marker">01</div>
       <div class="step-body">
-        <h3>Decide what it should show</h3>
-        <ul>
-          <li>You at your desk, monitors with code/diagrams visible</li>
-          <li>Warm, cozy lighting — like a late-night build session</li>
-          <li>Subtle hand movement, like you're explaining something</li>
-          <li>5–10 seconds is enough — it just needs to loop cleanly</li>
-        </ul>
+        <h3>Generate the still photo first</h3>
+        <p>Before the video, you need one strong reference photo — the video tool animates this image. This was generated using <strong>Google Flow</strong>. The prompt below is the exact one used, written to leave empty space on the left for the headline text and keep the photo realistic instead of looking AI-generated.</p>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-block-label">Image Prompt — Google Flow</span>
+            <button class="prompt-copy-btn" data-copy-target="image-prompt">copy</button>
+          </div>
+          <pre id="image-prompt">Ultra-realistic cinematic portrait of a software engineer sitting at a modern workstation in a cozy home office at night.
+
+The subject is seated behind a wooden desk, facing the camera naturally with a relaxed confident expression. Hands resting on the desk as if explaining something during a YouTube video or video call.
+
+Modern dual-monitor setup displaying clean code editors, dashboards, and development tools. Mechanical keyboard, wireless mouse, coffee mug, and subtle tech accessories on the desk.
+
+Large bookshelf in the background filled with books, plants, collectibles, and tasteful decor. Warm ambient lighting throughout the room. Soft desk lamps on both sides creating a cozy workspace atmosphere.
+
+Professional content creator workspace, realistic interior design, premium home office, warm orange and golden practical lighting, soft shadows, cinematic depth.
+
+Shot on a Sony A7R V, 50mm lens, f/1.8, shallow depth of field, creamy bokeh, natural skin texture, realistic beard detail, realistic hair strands, physically accurate lighting, HDR photography.
+
+Highly detailed face, natural eyes, authentic skin pores, realistic reflections on glasses, professional color grading, modern tech founder aesthetic.
+
+Composition:
+- Subject placed on the right third of the frame
+- Empty negative space on the left side for portfolio text
+- Wide hero-section composition
+- 16:9 aspect ratio
+- Eye-level camera angle
+
+Environment:
+- Warm cozy developer workspace
+- Premium desk setup
+- Soft monitor glow
+- Bookshelves and decor in background
+- Modern apartment office
+- Clean and minimalist
+
+Photorealistic, ultra realistic, commercial photography, lifestyle portrait, portfolio website hero section, 8K, extremely detailed, cinematic lighting.</pre>
+          <div class="prompt-block-sub">Negative Prompt</div>
+          <pre class="negative" id="negative-prompt">cartoon, illustration, 3d render, CGI, Pixar style, anime, painting, low quality, blurry, extra fingers, distorted hands, unrealistic skin, overprocessed face, text, watermark, logo, captions, UI elements</pre>
+        </div>
+        <p style="margin-top:10px;">Notice the "negative space on the left side" line in the composition section — that's intentional. It leaves room for your headline text to sit beside you in the hero, instead of covering your face.</p>
       </div>
     </div>
 
     <div class="step">
       <div class="step-marker">02</div>
       <div class="step-body">
-        <h3>Generate it with Higgsfield</h3>
-        <ul>
-          <li>Use your reference photo as the starting image</li>
-          <li>Ask for an image-to-video generation — keep motion subtle, camera steady</li>
-          <li>Pick a model built for realistic image-to-video, not big dramatic camera moves (the site already adds 3D motion on top)</li>
-          <li>Generate a few versions and pick the cleanest one</li>
-        </ul>
+        <h3>Turn that photo into a video</h3>
+        <p>Once you've got a still you like, upload it back into Google Flow and use it as the starting frame for an image-to-video generation. Give it a short line of dialogue so the character actually speaks instead of just sitting there:</p>
+        <div class="prompt-block">
+          <div class="prompt-block-head">
+            <span class="prompt-block-label">Video Prompt — Google Flow (image-to-video)</span>
+            <button class="prompt-copy-btn" data-copy-target="video-prompt">copy</button>
+          </div>
+          <pre id="video-prompt">Character says these words: "Hi this is Ajay. I am a software engineer with 7 years of experience building enterprise systems with deep experience in Java, Spring Boot, AWS, and API development."</pre>
+        </div>
+        <p style="margin-top:10px;">Upload the generated image as the reference, paste this as the prompt, and let it animate. Because the line is short and the framing was already locked in by the photo prompt, the motion stays natural — mouth movement and a little hand gesture, nothing exaggerated.</p>
       </div>
     </div>
 
@@ -403,9 +490,9 @@
       <div class="step-body">
         <h3>Clean it up</h3>
         <ul>
-          <li>Mute any audio — the site autoplays muted anyway</li>
-          <li>Trim to 5–10 seconds, set to loop</li>
-          <li>Compress under <code>8MB</code> so the site loads fast</li>
+          <li>Mute any audio you don't want in the final loop — the site autoplays muted anyway</li>
+          <li>Trim it down if it runs long; 5–10 seconds is plenty for a looping background</li>
+          <li>Compress the file under <code>8MB</code> so the site loads fast</li>
         </ul>
       </div>
     </div>
@@ -616,6 +703,20 @@
     if (a.href.includes('url=') && !a.href.endsWith('url=' + encodeURIComponent(url))) {
       a.href = a.href + encodeURIComponent(url);
     }
+  });
+
+  // Copy buttons for the AI prompt blocks
+  document.querySelectorAll('.prompt-copy-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-copy-target');
+      const el = document.getElementById(targetId);
+      if (!el) return;
+      navigator.clipboard.writeText(el.textContent).then(() => {
+        const original = btn.textContent;
+        btn.textContent = 'copied!';
+        setTimeout(() => { btn.textContent = original; }, 1500);
+      });
+    });
   });
 </script>
 
