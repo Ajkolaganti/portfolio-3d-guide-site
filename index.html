@@ -875,7 +875,9 @@ A single self-contained component file (e.g. components/scenes/ApiConstellationS
 </footer>
 
 <script>
-  const url = window.location.href;
+  // Always use the clean origin + path — never include query params (e.g. tracking
+  // or session tokens that a browser/tool might append) or a hash fragment.
+  const url = window.location.origin + window.location.pathname;
   document.getElementById('current-url').textContent = url;
 
   function copyUrl() {
